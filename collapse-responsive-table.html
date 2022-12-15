@@ -4,52 +4,7 @@
     <meta charset="UTF-8">
     <title>Responsive collapse table</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <style>
-        .collapse-responsive-table .hidden-column {
-            display: none;
-        }
-
-        .responsive-collapse-toggler {
-            background-color: #e1e1e1;
-            padding: 4px;
-            margin-right: 8px;
-            cursor: pointer;
-            width: 20px;
-            height: 20px;
-            position: relative;
-            display: inline-block;
-            vertical-align: top;
-        }
-
-        .responsive-collapse-toggler:before,
-        .responsive-collapse-toggler:after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%,-50%);
-            transform-origin: center center;
-            width: 12px;
-            height: 1px;
-            background-color: #4d4d4d;
-        }
-
-        .responsive-collapse-toggler:after {
-            transform: translate(-50%,-50%) rotate(90deg);
-        }
-
-        .responsive-collapse-toggler.open {
-            background-color: #c3e998;
-        }
-
-        .responsive-collapse-toggler.open:after {
-            display: none;
-        }
-
-        .collapse-row td {
-            background-color: #f1f1f1;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container py-5">
@@ -89,60 +44,6 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function () {
-            if($('.collapse-responsive-table').length) {
-                $(window).resize(function () {
-                    manage_columns();
-                });
-                manage_columns();
-
-                function manage_columns() {
-                    $('.collapse-responsive-table').each(function () {
-                        var nb_hidden_columns = 0;
-                        let page_width = $(window).width();
-                        $(this).find('tr th').each(function () {
-                            let column_index = $(this).index() + 1;
-                            if($(this).attr('data-breakpoints') && page_width < $(this).attr('data-breakpoints')) {
-                                // Hide column and add to collapse
-                                let column_title = $(this).text();
-                                $(this).parents('.collapse-responsive-table').find('tr *:nth-child('+column_index+')').addClass('hidden-column');
-                                // Create collapse opener if needed
-                                if(nb_hidden_columns < 1 && !$(this).parents('.collapse-responsive-table').find('.responsive-collapse-toggler').length) {
-                                    $(this).parents('.collapse-responsive-table').find('tbody tr td:nth-child(1)').prepend('<span class="responsive-collapse-toggler"></span>');
-                                }
-                                nb_hidden_columns ++;
-                            } else if($(this).hasClass('hidden-column')) {
-                                // Show column and remove from collapse
-                                $(this).parents('.collapse-responsive-table').find('tr *:nth-child('+column_index+')').removeClass('hidden-column');
-                                if(nb_hidden_columns == 0) {
-                                    $(this).parents('.collapse-responsive-table').find('.responsive-collapse-toggler').remove();
-                                }
-                                nb_hidden_columns --;
-                            }
-                        });
-                    });
-                }
-
-                $(document).on('click', '.responsive-collapse-toggler', function () {
-                    if(!$(this).hasClass('open')) {
-                        let collapse_content = '<tr class="collapse-row"><td colspan="100%">';
-                        let current_row = $(this).parent('td').parent('tr');
-                        $(this).parents('.collapse-responsive-table').find('th.hidden-column').each(function () {
-                            let column_index = $(this).index();
-                            let column_name = $(this).text();
-                            collapse_content += '<p><strong>'+column_name+'</strong> : '+ $(current_row).find('td').eq(column_index).text() +'</p>';
-                        });
-                        collapse_content += '</td></tr>';
-                        $(this).parent('td').parent('tr').after(collapse_content);
-                        $(this).addClass('open');
-                    } else {
-                        $(this).parent('td').parent('tr').next('.collapse-row').remove();
-                        $(this).removeClass('open');
-                    }
-                });
-            }
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
