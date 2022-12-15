@@ -1,0 +1,39 @@
+.collapse-responsive-table .hidden-column {
+  display: none;
+}
+.collapse-responsive-table .responsive-collapse-toggler {
+  background-color: #e1e1e1;
+  padding: 4px;
+  margin-right: 8px;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+}
+.collapse-responsive-table .responsive-collapse-toggler::before, .collapse-responsive-table .responsive-collapse-toggler:after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  width: 12px;
+  height: 1px;
+  background-color: #4d4d4d;
+}
+.collapse-responsive-table .responsive-collapse-toggler:after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+.collapse-responsive-table .responsive-collapse-toggler.open {
+  background-color: #c3e998;
+}
+.collapse-responsive-table .responsive-collapse-toggler.open:after {
+  display: none;
+}
+.collapse-responsive-table .collapse-row td {
+  background-color: #f1f1f1;
+}
+
+/*# sourceMappingURL=style.css.map */
